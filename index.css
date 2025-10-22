@@ -1,0 +1,957 @@
+/* --- VARIÁVEIS CSS --- */
+/* Define variáveis de cores reutilizáveis em todo o projeto */
+:root {
+    --cor-primaria: #1e3a8a;
+    /* Azul escuro principal */
+    --cor-secundaria: #3b82f6;
+    /* Azul médio */
+    --cor-destaque: #06b6d4;
+    /* Ciano para destaques */
+    --cor-destaque-hover: #22d3ee;
+    /* Ciano claro para hover */
+    --texto-claro: #dbeafe;
+    /* Texto em azul claro */
+    --texto-ciano: #67e8f9;
+    /* Texto em ciano */
+    --cor-perigo: #f87171;
+    /* Vermelho para perigos/erros */
+}
+
+/* --- RESET E ESTILOS GERAIS --- */
+/* Remove seleção de texto e garante box-sizing consistente */
+* {
+    user-select: none;
+    /* Impede seleção de texto */
+    box-sizing: border-box;
+    /* Inclui padding e border no tamanho total */
+}
+
+/* Estiliza o corpo da página */
+body {
+    overflow: hidden;
+    /* Esconde barras de rolagem */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Define fonte padrão */
+    margin: 0;
+    /* Remove margem padrão */
+    background-color: var(--cor-primaria);
+    /* Define cor de fundo */
+}
+
+/* Classe utilitária para ocultar elementos */
+.oculto {
+    display: none !important;
+    /* Força ocultação do elemento */
+}
+
+/* --- ANIMAÇÕES --- */
+/* Animação de balanço para sacolas plásticas */
+@keyframes balanco {
+
+    0%,
+    100% {
+        transform: rotate(-1.5deg) scale(1.03);
+        /* Rotaciona para esquerda e aumenta */
+        opacity: 0.75;
+        /* Opacidade média */
+    }
+
+    50% {
+        transform: rotate(1.5deg) scale(0.97);
+        /* Rotaciona para direita e diminui */
+        opacity: 0.65;
+        /* Opacidade mais baixa */
+    }
+}
+
+/* Animação de pulso para elementos */
+@keyframes pulso {
+    50% {
+        opacity: 0.5;
+    }
+
+    /* Reduz opacidade no meio da animação */
+}
+
+/* Animação de nado para o jogador */
+@keyframes animacao-nado {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(5px) rotate(-2deg);
+        /* Posição inicial/final */
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-15px) rotate(2deg);
+        /* Posição intermediária */
+    }
+}
+
+/* Animação de flutuação para elementos decorativos */
+@keyframes flutuar {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    /* Posição normal */
+    50% {
+        transform: translateY(-20px);
+    }
+
+    /* Sobe 20px */
+}
+
+/* Animação de entrada com fade e movimento */
+@keyframes aparecer-subindo {
+    from {
+        opacity: 0;
+        /* Começa invisível */
+        transform: translateY(30px);
+        /* Começa 30px abaixo */
+    }
+
+    to {
+        opacity: 1;
+        /* Termina visível */
+        transform: translateY(0);
+        /* Termina na posição normal */
+    }
+}
+
+/* Animação de onda para efeitos de água */
+@keyframes onda {
+
+    0%,
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+
+    /* Posição inicial/final */
+    25% {
+        transform: translateX(-10px) translateY(-5px);
+    }
+
+    /* Move para esquerda e cima */
+    75% {
+        transform: translateX(10px) translateY(5px);
+    }
+
+    /* Move para direita e baixo */
+}
+
+/* --- CONTÊINER PRINCIPAL --- */
+/* Estiliza o contêiner raiz da aplicação */
+#raiz {
+    width: 100vw;
+    /* Largura total da viewport */
+    height: 100vh;
+    /* Altura total da viewport */
+    display: flex;
+    /* Usa flexbox para centralização */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    color: white;
+    /* Cor do texto padrão */
+    position: relative;
+    /* Permite posicionamento absoluto de filhos */
+    overflow: hidden;
+    /* Esconde conteúdo que sair dos limites */
+    background-image: url(Img/BelugaGame.png);
+    background-size: cover;
+    /* Cobre toda a área */
+    background-attachment: fixed;
+    /* Fixa a imagem */
+}
+
+/* Efeito de ondas no fundo usando pseudo-elemento */
+#raiz::before {
+    content: '';
+    /* Necessário para pseudo-elementos */
+    position: absolute;
+    /* Posiciona absolutamente */
+    bottom: 0;
+    /* Alinha ao fundo */
+    left: 0;
+    /* Alinha à esquerda */
+    right: 0;
+    /* Alinha à direita */
+    height: 200px;
+    /* Altura do efeito */
+}
+
+/* --- PAINÉIS DE TELA --- */
+/* Estilo comum para painéis de tela (início, fim) */
+.painel-tela {
+    z-index: 10;
+    /* Coloca acima do fundo */
+    text-align: center;
+    /* Centraliza texto */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Fundo semi-transparente */
+    padding: 3rem;
+    /* Espaçamento interno */
+    border-radius: 1.5rem;
+    /* Bordas arredondadas */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Sombra suave */
+    backdrop-filter: blur(16px);
+    /* Efeito de desfoque no fundo */
+    border: 2px solid rgba(6, 182, 212, 0.3);
+    /* Borda ciano semi-transparente */
+    max-width: 90%;
+    /* Largura máxima responsiva */
+    animation: aparecer-subindo 0.8s ease-out;
+    /* Animação de entrada */
+}
+
+/* --- TELA DE INÍCIO --- */
+/* Estiliza o título principal da tela de início */
+#tela-inicio h1 {
+    font-size: 6rem;
+    /* Tamanho grande do título */
+    font-weight: 700;
+    /* Peso da fonte em negrito */
+    margin-bottom: 0.5rem;
+    /* Espaçamento inferior */
+    color: var(--texto-ciano);
+    /* Cor ciano */
+    text-shadow: 0 0 30px var(--cor-destaque-hover), 0 0 60px rgba(6, 182, 212, 0.5);
+    /* Brilho ao redor */
+    animation: flutuar 3s ease-in-out infinite;
+    /* Animação de flutuação */
+}
+
+/* Estiliza o subtítulo */
+#tela-inicio .subtitulo {
+    font-size: 1.5rem;
+    /* Tamanho médio */
+    color: var(--cor-destaque-hover);
+    /* Cor ciano claro */
+    margin-bottom: 2rem;
+    /* Espaçamento inferior */
+    font-style: italic;
+    /* Texto em itálico */
+    opacity: 0.9;
+    /* Levemente transparente */
+}
+
+/* Estiliza parágrafos da tela de início */
+#tela-inicio p {
+    font-size: 1.125rem;
+    /* Tamanho ligeiramente maior que o padrão */
+    line-height: 1.75rem;
+    /* Altura da linha para legibilidade */
+    max-width: 40rem;
+    /* Largura máxima do texto */
+    margin-left: auto;
+    /* Centraliza horizontalmente */
+    margin-right: auto;
+    /* Centraliza horizontalmente */
+    margin-bottom: 2.5rem;
+    /* Espaçamento inferior */
+    color: var(--texto-claro);
+    /* Cor do texto claro */
+}
+
+/* --- BOTÕES --- */
+/* Estilo base para botões */
+.botao {
+    padding: 1.25rem 2.5rem;
+    /* Espaçamento interno */
+    background-color: var(--cor-destaque);
+    /* Cor de fundo ciano */
+    color: var(--cor-primaria);
+    /* Texto azul escuro */
+    font-weight: 700;
+    /* Negrito */
+    font-size: 1.5rem;
+    /* Tamanho da fonte */
+    border-radius: 0.75rem;
+    /* Bordas arredondadas */
+    border: none;
+    /* Remove borda padrão */
+    cursor: pointer;
+    /* Cursor de pointer ao passar */
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.4);
+    /* Sombra com cor */
+    transition: all 300ms ease-in-out;
+    /* Transição suave */
+    text-transform: uppercase;
+    /* Texto em maiúsculas */
+    position: relative;
+    /* Para posicionar pseudo-elemento */
+    overflow: hidden;
+    /* Esconde overflow do efeito */
+}
+
+/* Efeito de ripple ao passar o mouse */
+.botao::before {
+    content: '';
+    /* Necessário para pseudo-elementos */
+    position: absolute;
+    /* Posicionamento absoluto */
+    top: 50%;
+    /* Centro vertical */
+    left: 50%;
+    /* Centro horizontal */
+    width: 0;
+    /* Largura inicial zero */
+    height: 0;
+    /* Altura inicial zero */
+    border-radius: 50%;
+    /* Forma circular */
+    background: rgba(255, 255, 255, 0.3);
+    /* Fundo branco semi-transparente */
+    transform: translate(-50%, -50%);
+    /* Centraliza */
+    transition: width 0.6s, height 0.6s;
+    /* Transição de tamanho */
+}
+
+/* Expande o efeito ripple ao passar o mouse */
+.botao:hover::before {
+    width: 300px;
+    /* Largura expandida */
+    height: 300px;
+    /* Altura expandida */
+}
+
+/* Estado hover do botão */
+.botao:hover {
+    background-color: var(--cor-destaque-hover);
+    /* Cor mais clara */
+    transform: scale(1.05) translateY(-2px);
+    /* Aumenta e move para cima */
+    box-shadow: 0 15px 35px rgba(34, 211, 238, 0.6);
+    /* Sombra mais intensa */
+}
+
+/* Estilo para botões secundários */
+.botao-secundario {
+    background-color: transparent;
+    /* Fundo transparente */
+    color: var(--texto-claro);
+    /* Texto claro */
+    border: 2px solid var(--cor-destaque);
+    /* Borda ciano */
+    font-size: 1rem;
+    /* Tamanho menor */
+    padding: 0.875rem 1.75rem;
+    /* Padding menor */
+}
+
+/* Estado hover de botões secundários */
+.botao-secundario:hover {
+    background-color: var(--cor-destaque);
+    /* Adiciona fundo */
+    color: var(--cor-primaria);
+    /* Muda cor do texto */
+    border-color: var(--cor-destaque-hover);
+    /* Muda cor da borda */
+}
+
+/* Container dos botões da tela inicial */
+#botoes-tela-inicio {
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: column;
+    /* Organiza em coluna */
+    align-items: center;
+    /* Centraliza itens */
+    gap: 1.25rem;
+    /* Espaçamento entre itens */
+}
+
+/* Container dos botões secundários */
+#botoes-secundarios {
+    margin-top: 1.5rem;
+    /* Margem superior */
+    display: flex;
+    /* Usa flexbox */
+    gap: 1rem;
+    /* Espaçamento entre botões */
+    justify-content: center;
+    /* Centraliza botões */
+    flex-wrap: wrap;
+    /* Permite quebra de linha */
+}
+
+/* --- TELA DO JOGO --- */
+/* Estiliza a tela principal do jogo */
+#tela-jogo {
+    width: 100%;
+    /* Largura total */
+    height: 100%;
+    /* Altura total */
+}
+
+/* Área onde o jogo acontece */
+#area-jogo {
+    width: 100%;
+    /* Largura total */
+    height: 100%;
+    /* Altura total */
+    position: relative;
+    /* Permite posicionamento absoluto de filhos */
+    overflow: hidden;
+    /* Esconde elementos que saem da área */
+}
+
+/* --- HUD (Interface do Usuário) --- */
+/* Estiliza a barra superior com informações */
+#hud {
+    position: absolute;
+    /* Posicionamento absoluto */
+    top: 0;
+    /* Alinha ao topo */
+    left: 0;
+    /* Alinha à esquerda */
+    right: 0;
+    /* Alinha à direita */
+    padding: 1rem;
+    /* Espaçamento interno */
+    display: flex;
+    /* Usa flexbox */
+    justify-content: space-between;
+    /* Distribui espaço entre itens */
+    align-items: center;
+    /* Centraliza verticalmente */
+    font-size: 1.5rem;
+    /* Tamanho da fonte */
+    font-weight: 700;
+    /* Negrito */
+    z-index: 20;
+    /* Fica acima de outros elementos */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+    /* Gradiente escuro */
+}
+
+/* Estiliza cada item do HUD */
+.item-hud {
+    display: flex;
+    /* Usa flexbox */
+    align-items: center;
+    /* Centraliza verticalmente */
+    gap: 0.75rem;
+    /* Espaçamento entre elementos */
+}
+
+/* Container dos corações (vidas) */
+#container-vidas {
+    display: flex;
+    /* Usa flexbox */
+    gap: 0.25rem;
+    /* Pequeno espaçamento entre corações */
+}
+
+/* Estiliza os ícones SVG de coração */
+#container-vidas svg {
+    width: 2rem;
+    /* Largura do ícone */
+    height: 2rem;
+    /* Altura do ícone */
+    filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.5));
+    /* Sombra vermelha */
+}
+
+/* Botão de pausar */
+#botao-pausar {
+    background: rgba(0, 0, 0, 0.3);
+    /* Fundo semi-transparente */
+    border: 2px solid var(--cor-destaque);
+    /* Borda ciano */
+    border-radius: 0.5rem;
+    /* Bordas arredondadas */
+    color: white;
+    /* Texto branco */
+    font-size: 2rem;
+    /* Tamanho grande */
+    padding: 0.5rem 1rem;
+    /* Espaçamento interno */
+    cursor: pointer;
+    /* Cursor de pointer */
+    transition: all 0.3s;
+    /* Transição suave */
+}
+
+/* Estado hover do botão pausar */
+#botao-pausar:hover {
+    transform: scale(1.1);
+    /* Aumenta o tamanho */
+    background: var(--cor-destaque);
+    /* Adiciona fundo ciano */
+    box-shadow: 0 0 15px var(--cor-destaque-hover);
+    /* Adiciona brilho */
+}
+
+/* Classes utilitárias para cores de texto */
+.texto-vermelho-500 {
+    color: #ef4444;
+}
+
+/* Vermelho para corações preenchidos */
+.texto-cinza-600 {
+    color: #4b5563;
+    opacity: 0.4;
+}
+
+/* Cinza para corações vazios */
+
+/* --- JOGADOR --- */
+/* Estiliza o elemento do jogador (baleia beluga) */
+#jogador {
+    position: absolute;
+    /* Posicionamento absoluto */
+    left: 50%;
+    /* Centraliza horizontalmente */
+    top: 50%;
+    /* Centraliza verticalmente */
+    z-index: 10;
+    /* Fica acima dos animais */
+    font-size: 11rem;
+    /* Tamanho muito grande */
+    user-select: none;
+    /* Impede seleção */
+    animation: animacao-nado 2.5s ease-in-out infinite;
+    /* Animação de nado */
+    filter: drop-shadow(0 0 20px rgba(103, 232, 249, 0.6));
+    /* Brilho ciano */
+}
+
+/* --- MENSAGEM DE NÍVEL COMPLETO --- */
+/* Estiliza a mensagem que aparece ao completar um nível */
+#mensagem-nivel-completo {
+    position: absolute;
+    /* Posicionamento absoluto */
+    inset: 0;
+    /* Preenche toda a área */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Fundo escuro semi-transparente */
+    display: flex;
+    /* Usa flexbox */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    z-index: 30;
+    /* Fica acima de tudo */
+}
+
+/* Estiliza o texto da mensagem */
+#mensagem-nivel-completo h2 {
+    font-size: 3.5rem;
+    /* Tamanho grande */
+    font-weight: 700;
+    /* Negrito */
+    color: var(--texto-ciano);
+    /* Cor ciano */
+    text-shadow: 0 0 30px var(--cor-destaque-hover);
+    /* Brilho ao redor */
+    animation: pulso 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    /* Animação de pulso */
+}
+
+/* --- TELA FINAL --- */
+/* Estiliza o título da tela final */
+#titulo-final {
+    font-size: 4.5rem;
+    /* Tamanho grande */
+    margin-bottom: 1rem;
+    /* Espaçamento inferior */
+}
+
+/* Estiliza a mensagem final */
+#mensagem-final {
+    font-size: 1.5rem;
+    /* Tamanho médio */
+    margin-bottom: 1rem;
+    /* Espaçamento inferior */
+    color: var(--texto-claro);
+    /* Cor clara */
+}
+
+/* Container da pontuação final */
+.container-pontuacao-final {
+    font-size: 2.5rem;
+    /* Tamanho grande */
+    font-weight: 700;
+    /* Negrito */
+    margin-bottom: 2rem;
+    /* Espaçamento inferior */
+}
+
+/* Estilo para pontuação de vitória */
+.pontuacao-vitoria {
+    color: var(--cor-destaque-hover);
+    /* Cor ciano claro */
+    text-shadow: 0 0 20px var(--cor-destaque-hover);
+    /* Brilho */
+}
+
+/* Estilo para pontuação de derrota */
+.pontuacao-derrota {
+    color: var(--cor-perigo);
+    /* Cor vermelha */
+    text-shadow: 0 0 20px var(--cor-perigo);
+    /* Brilho vermelho */
+}
+
+/* --- ANIMAIS --- */
+/* Estiliza cada elemento animal no jogo */
+.elemento-animal {
+    position: absolute;
+    /* Posicionamento absoluto */
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: column;
+    /* Organiza em coluna */
+    align-items: center;
+    /* Centraliza itens */
+    cursor: pointer;
+    /* Cursor de pointer ao passar */
+    transform: translate(-50%, -50%);
+    /* Centraliza o elemento */
+    transition: transform 0.2s;
+    /* Transição suave de transformação */
+}
+
+/* Efeito hover nos animais */
+.elemento-animal:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    /* Aumenta o tamanho ao passar o mouse */
+}
+
+/* Estiliza a sacola plástica que envolve animais presos */
+.sacola-plastica {
+    position: absolute;
+    /* Posicionamento absoluto */
+    inset: 0;
+    /* Preenche todo o container pai */
+    background-color: rgba(255, 255, 255, 0.25);
+    /* Fundo branco semi-transparente */
+    border-radius: 9999px;
+    /* Bordas totalmente arredondadas (círculo) */
+    animation: balanco 3.5s ease-in-out infinite;
+    /* Animação de balanço */
+    backdrop-filter: blur(4px);
+    /* Efeito de desfoque */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    /* Borda branca semi-transparente */
+}
+
+/* --- MODAIS --- */
+/* Estiliza a sobreposição escura dos modais */
+.sobreposicao-modal {
+    position: fixed;
+    /* Posicionamento fixo na viewport */
+    inset: 0;
+    /* Preenche toda a tela */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Fundo escuro semi-transparente */
+    z-index: 40;
+    /* Fica acima de outros elementos */
+    display: flex;
+    /* Usa flexbox */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    backdrop-filter: blur(5px);
+    /* Efeito de desfoque no fundo */
+}
+
+/* Estiliza o conteúdo interno dos modais */
+.conteudo-modal {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.9) 100%);
+    /* Gradiente azul */
+    padding: 2.5rem;
+    /* Espaçamento interno */
+    border-radius: 1.5rem;
+    /* Bordas arredondadas */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Sombra suave */
+    backdrop-filter: blur(16px);
+    /* Efeito de desfoque */
+    border: 2px solid rgba(6, 182, 212, 0.4);
+    /* Borda ciano */
+    color: white;
+    /* Texto branco */
+    text-align: center;
+    /* Centraliza texto */
+    max-width: 800px;
+    /* Largura máxima */
+    width: 90%;
+    /* Largura responsiva */
+    position: relative;
+    /* Para posicionar botão de fechar */
+    max-height: 90vh;
+    /* Altura máxima */
+    overflow-y: auto;
+    /* Permite scroll vertical se necessário */
+}
+
+/* Estiliza títulos dos modais */
+.titulo-modal {
+    font-size: 2.5rem;
+    /* Tamanho grande */
+    font-weight: 700;
+    /* Negrito */
+    margin-bottom: 1.5rem;
+    /* Espaçamento inferior */
+    color: var(--texto-ciano);
+    /* Cor ciano */
+    text-shadow: 0 0 20px var(--cor-destaque-hover);
+    /* Brilho ao redor */
+}
+
+/* Estiliza o corpo dos modais */
+.corpo-modal {
+    font-size: 1.1rem;
+    /* Tamanho ligeiramente maior */
+    line-height: 1.6;
+    /* Altura da linha para legibilidade */
+    color: var(--texto-claro);
+    /* Cor clara */
+    text-align: left;
+    /* Alinha texto à esquerda */
+    margin-bottom: 2rem;
+    /* Espaçamento inferior */
+}
+
+/* Estiliza listas dentro dos modais */
+.corpo-modal ul {
+    padding-left: 1.5rem;
+    /* Indentação da lista */
+}
+
+/* Estiliza itens de lista */
+.corpo-modal li {
+    margin-bottom: 0.75rem;
+    /* Espaçamento entre itens */
+}
+
+/* Botão de fechar modal (X) */
+.botao-fechar {
+    position: absolute;
+    /* Posicionamento absoluto */
+    top: 1rem;
+    /* Distância do topo */
+    right: 1rem;
+    /* Distância da direita */
+    background: rgba(0, 0, 0, 0.5);
+    /* Fundo escuro semi-transparente */
+    border: 2px solid var(--cor-destaque);
+    /* Borda ciano */
+    border-radius: 50%;
+    /* Forma circular */
+    color: white;
+    /* Cor do texto */
+    font-size: 1.5rem;
+    /* Tamanho da fonte */
+    width: 40px;
+    /* Largura fixa */
+    height: 40px;
+    /* Altura fixa */
+    cursor: pointer;
+    /* Cursor de pointer */
+    line-height: 1;
+    /* Altura da linha */
+    transition: all 0.3s;
+    /* Transição suave */
+}
+
+/* Estado hover do botão fechar */
+.botao-fechar:hover {
+    background: var(--cor-perigo);
+    /* Fundo vermelho */
+    border-color: var(--cor-perigo);
+    /* Borda vermelha */
+    transform: rotate(90deg);
+    /* Rotaciona 90 graus */
+}
+
+/* --- MENU DE PAUSA --- */
+/* Ajusta largura do modal de pausa */
+#menu-pausa .conteudo-modal {
+    width: auto;
+    /* Largura automática */
+    min-width: 300px;
+    /* Largura mínima */
+}
+
+/* Container dos botões do menu de pausa */
+#botoes-menu-pausa {
+    display: flex;
+    /* Usa flexbox */
+    flex-direction: column;
+    /* Organiza em coluna */
+    gap: 1rem;
+    /* Espaçamento entre botões */
+}
+
+/* --- BESTIÁRIO --- */
+
+/* Grade de cartões do bestiário */
+#grade-bestiario {
+    display: grid;
+    /* Usa CSS Grid */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* Colunas responsivas */
+    gap: 1.5rem;
+    /* Espaçamento entre cartões */
+    text-align: center;
+    /* Centraliza texto */
+}
+
+/* Estiliza cada cartão de animal no bestiário */
+.cartao-bestiario {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    /* Gradiente claro */
+    padding: 1.5rem;
+    /* Espaçamento interno */
+    border-radius: 1rem;
+    /* Bordas arredondadas */
+    transition: all 0.3s;
+    /* Transição suave */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    /* Borda clara */
+}
+
+/* Estado hover dos cartões */
+.cartao-bestiario:hover {
+    transform: translateY(-5px);
+    /* Move para cima */
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+    /* Adiciona sombra */
+    border-color: var(--cor-destaque);
+    /* Muda cor da borda */
+}
+
+/* Estiliza o emoji dentro do cartão */
+.cartao-bestiario .emoji {
+    font-size: 4rem;
+    /* Tamanho grande */
+    filter: grayscale(1);
+    /* Torna cinza por padrão */
+    opacity: 0.3;
+    /* Transparente por padrão */
+    transition: all 0.3s;
+    /* Transição suave */
+}
+
+/* Emoji de animais desbloqueados */
+.cartao-bestiario.desbloqueado .emoji {
+    filter: none;
+    /* Remove escala de cinza */
+    opacity: 1;
+    /* Opacidade total */
+}
+
+/* Estiliza o título do cartão (nome do animal) */
+.cartao-bestiario h3 {
+    margin: 1rem 0 0.5rem;
+    /* Margens */
+    text-transform: capitalize;
+    /* Primeira letra maiúscula */
+    font-size: 1.25rem;
+    /* Tamanho médio */
+}
+
+/* Estiliza a descrição do animal */
+.cartao-bestiario p {
+    font-size: 0.9rem;
+    /* Tamanho pequeno */
+    color: var(--texto-claro);
+    /* Cor clara */
+    min-height: 60px;
+    /* Altura mínima para uniformidade */
+}
+
+/* Modal Conquistas */
+#corpo-conquistas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-size: 1.25rem;
+    text-align: center;
+}
+.item-conquista {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.item-conquista .rotulo {
+    display: block;
+    font-weight: bold;
+    color: var(--texto-ciano);
+    margin-bottom: 0.5rem;
+}
+.item-conquista .valor {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+}
+
+/* --- CLASSES DE TAMANHO DE TEXTO --- */
+/* Utilitárias para controlar tamanho dos emojis de animais */
+.texto-5xl {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+/* Extra grande */
+.texto-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+}
+
+/* Extra extra grande */
+.texto-7xl {
+    font-size: 4.5rem;
+    line-height: 1;
+}
+
+/* Muito grande */
+.texto-8xl {
+    font-size: 6rem;
+    line-height: 1;
+}
+
+/* Gigante */
+
+/* --- RESPONSIVIDADE --- */
+/* Ajustes para telas pequenas (mobile) */
+@media (max-width: 768px) {
+
+    /* Reduz tamanho do título na tela inicial */
+    #tela-inicio h1 {
+        font-size: 3.5rem;
+    }
+
+    /* Ajusta tamanho e padding dos botões */
+    .botao {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+    }
+
+    /* Organiza botões secundários em coluna */
+    #botoes-secundarios {
+        flex-direction: column;
+    }
+
+    /* Reduz padding dos painéis */
+    .painel-tela {
+        padding: 2rem;
+    }
+
+    /* Ajusta grade do bestiário para telas menores */
+    #grade-bestiario {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}

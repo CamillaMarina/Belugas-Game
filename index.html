@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta charset="UTF-8">
+    <!-- Configura a viewport para dispositivos móveis -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define o título da página que aparece na aba do navegador -->
+    <title>Beluga's Game</title>
+    <!-- Link para o arquivo de estilos CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Contêiner principal da aplicação -->
+    <div id="raiz">
+        <!-- Tela Inicial do Jogo -->
+        <div id="tela-inicio" class="painel-tela">
+            <!-- Título principal do jogo -->
+            <h1>🐋 Beluga's Game</h1>
+            <!-- Subtítulo com mensagem motivacional -->
+            <p class="subtitulo">Divirta-se salvando o oceano!</p>
+            <!-- Descrição das instruções básicas do jogo -->
+            <p>
+                Salve os animais marinhos da poluição! Clique nos animais presos para libertá-los, mas tome cuidado para
+                não clicar nos animais livres.
+            </p>
+
+            <!-- Contêiner dos botões da tela inicial -->
+            <div id="botoes-tela-inicio">
+                <!-- Botão principal para iniciar o jogo -->
+                <button id="botao-iniciar" class="botao">🎮 Jogar</button>
+                <!-- Grupo de botões secundários -->
+                <div id="botoes-secundarios">
+                    <!-- Botão para abrir o bestiário -->
+                    <button id="botao-bestiario" class="botao botao-secundario">📚 Animais Salvos</button>
+                    <!-- Botão para visualizar as conquistas -->
+                    <button id="botao-conquistas" class="botao botao-secundario">🏆Conquistas</button>
+                    <!-- Botão para visualizar as regras -->
+                    <button id="botao-regras" class="botao botao-secundario">📋 Regras</button>
+                    <!-- Botão para informações sobre o jogo -->
+                    <button id="botao-sobre" class="botao botao-secundario">ℹ️ Sobre</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tela do Jogo (oculta inicialmente) -->
+        <div id="tela-jogo" class="oculto">
+            <!-- HUD - Interface com informações do jogo -->
+            <div id="hud">
+                <!-- Exibe as vidas restantes -->
+                <div class="item-hud">
+                    <span>Vidas:</span>
+                    <!-- Contêiner dos corações representando vidas -->
+                    <div id="container-vidas"></div>
+                </div>
+                <!-- Exibe o nível atual -->
+                <div id="exibicao-nivel" class="item-hud">Nível: 1</div>
+                <!-- Exibe a pontuação atual -->
+                <div id="exibicao-pontuacao" class="item-hud">Pontuação: 0</div>
+                <!-- Botão para pausar o jogo -->
+                <button id="botao-pausar" aria-label="Pausar jogo">⏸️</button>
+            </div>
+
+            <!-- Área onde o jogo acontece -->
+            <div id="area-jogo">
+                <!-- Elemento do jogador (baleia beluga) no centro -->
+                <div id="jogador"><span role="img" aria-label="baleia beluga">🐋</span></div>
+            </div>
+
+            <!-- Mensagem exibida quando um nível é concluído -->
+            <div id="mensagem-nivel-completo" class="oculto">
+                <h2></h2>
+            </div>
+        </div>
+
+        <!-- Tela Final (oculta inicialmente) -->
+        <div id="tela-final" class="painel-tela oculto">
+            <!-- Título da tela final (vitória ou derrota) -->
+            <h1 id="titulo-final"></h1>
+            <!-- Mensagem final -->
+            <p id="mensagem-final"></p>
+            <!-- Exibe a pontuação final -->
+            <p class="container-pontuacao-final">
+                Pontuação Final: <span id="pontuacao-final">0</span>
+            </p>
+            <!-- Botão para jogar novamente -->
+            <button id="botao-reiniciar" class="botao">🔄 Jogar Novamente</button>
+        </div>
+
+        <!-- Menu de Pausa (modal oculto) -->
+        <div id="menu-pausa" class="sobreposicao-modal oculto">
+            <div class="conteudo-modal">
+                <!-- Título do menu de pausa -->
+                <h2 class="titulo-modal">⏸️ Pausado</h2>
+                <!-- Botões do menu de pausa -->
+                <div id="botoes-menu-pausa">
+                    <!-- Botão para retomar o jogo -->
+                    <button id="botao-retomar" class="botao">▶️ Retomar</button>
+                    <!-- Botão para reiniciar do zero -->
+                    <button id="botao-reiniciar-pausa" class="botao botao-secundario">🔄 Reiniciar</button>
+                    <!-- Botão para voltar à tela inicial -->
+                    <button id="botao-inicio" class="botao botao-secundario">🏠 Voltar ao Início</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal do Bestiário (lista de animais salvos) -->
+        <div id="modal-bestiario" class="sobreposicao-modal oculto">
+            <div class="conteudo-modal">
+                <!-- Botão para fechar o modal -->
+                <button class="botao-fechar">&times;</button>
+                <!-- Título do bestiário -->
+                <h2 class="titulo-modal">📚 Animais Salvos</h2>
+                <!-- Corpo do modal com a grade de animais -->
+                <div class="corpo-modal">
+                    <div id="grade-bestiario"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Conquistas -->
+        <div id="modal-conquistas" class="sobreposicao-modal oculto">
+            <div class="conteudo-modal">
+                <button class="botao-fechar">&times;</button>
+                <h2 class="titulo-modal">🏆 Suas Conquistas</h2>
+                <div id="corpo-conquistas" class="corpo-modal">
+                    <!-- As estatísticas serão inseridas aqui pelo JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Regras -->
+        <div id="modal-regras" class="sobreposicao-modal oculto">
+            <div class="conteudo-modal">
+                <!-- Botão para fechar o modal -->
+                <button class="botao-fechar">&times;</button>
+                <!-- Título das regras -->
+                <h2 class="titulo-modal">📋 Regras do Jogo</h2>
+                <!-- Conteúdo com as regras do jogo -->
+                <div class="corpo-modal">
+                    <p><strong>Objetivo:</strong> libertar os animais marinhos que estão presos em sacolas plásticas.
+                    </p>
+                    <ul>
+                        <li>✅ Clique em um animal preso em uma sacola para salvá-lo e ganhar pontos.</li>
+                        <li>❌ Se você clicar em um animal que está livre, você perde uma vida.</li>
+                        <li>⚠️ Se um animal preso chegar até a beluga, no centro, você perde uma vida.</li>
+                        <li>🎯 O jogo termina quando você perde todas as suas vidas ou completa todos os níveis.</li>
+                    </ul>
+                    <p>🌊 Boa sorte, o oceano conta com você!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Sobre o Jogo -->
+        <div id="modal-sobre" class="sobreposicao-modal oculto">
+            <div class="conteudo-modal">
+                <!-- Botão para fechar o modal -->
+                <button class="botao-fechar">&times;</button>
+                <!-- Título sobre a equipe -->
+                <h2 class="titulo-modal">ℹ️ Sobre a Equipe</h2>
+                <!-- Informações sobre os desenvolvedores -->
+                <div class="corpo-modal">
+                    <p>O Beluga's Game foi criado por alunos do 1º ano do Curso Técnico em Informática Integrado ao
+                        Ensino Médio junto com a inteligência artificial Google AI Studio.</p>
+                    <p>O jogo foi pensado seguindo o tema "Planta Água" da SNCT 2025. Quisemos criar um jogo que
+                        mostrasse um pouco da vida marinha de forma interativa e dinâmica.</p>
+                    <p>🎮 Jogue e divirta-se!</p>
+                    <br>
+                    <p><strong>👨‍💻 Desenvolvedores:</strong> Camilla Marina, Keven Duarte, Lavínia Antunes, Lucas
+                        Limongi e Rodrigo Isalto</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link para o arquivo JavaScript -->
+    <script src="index.js"></script>
+</body>
+</html>
