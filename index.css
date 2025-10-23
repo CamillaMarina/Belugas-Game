@@ -663,6 +663,7 @@ body {
     /* Centraliza horizontalmente */
     backdrop-filter: blur(5px);
     /* Efeito de desfoque no fundo */
+    z-index: 300;
 }
 
 /* Estiliza o conteúdo interno dos modais */
@@ -960,4 +961,8 @@ body {
     #grade-bestiario {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
+}
+
+.item-hud, #botao-pausar {
+    z-index: 200;
 }
