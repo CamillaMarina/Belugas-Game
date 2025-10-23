@@ -524,6 +524,8 @@ const Jogo = {
         const visual = DADOS_ANIMAIS[nome]; // Pega dados visuais
         const elemento = document.createElement('div'); // Cria div
         elemento.className = "elemento-animal"; // Adiciona classe
+        elemento.style.zIndex = 1;
+        elemento.style.position = "fixed"
         // Monta HTML interno
         elemento.innerHTML = `
             <div>

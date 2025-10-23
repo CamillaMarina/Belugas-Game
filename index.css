@@ -697,11 +697,11 @@ body {
 
 /* Estiliza títulos dos modais */
 .titulo-modal {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     /* Tamanho grande */
     font-weight: 700;
     /* Negrito */
-    margin-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
     /* Espaçamento inferior */
     color: var(--texto-ciano);
     /* Cor ciano */
@@ -719,14 +719,20 @@ body {
     /* Cor clara */
     text-align: left;
     /* Alinha texto à esquerda */
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     /* Espaçamento inferior */
 }
 
 /* Estiliza listas dentro dos modais */
 .corpo-modal ul {
     padding-left: 1.5rem;
+    list-style-type: none;
     /* Indentação da lista */
+}
+
+#modal-regras .corpo-modal p {
+    text-align: center;
+    margin-block: 25px;
 }
 
 /* Estiliza itens de lista */
